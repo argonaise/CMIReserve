@@ -1,0 +1,187 @@
+<html>
+<head>
+	<meta charset="utf-8" />
+	<style>
+		body { background:url('image/background.jpg'); margin:0px; background-repeat:no-repeat; }
+		td { margin:0px; padding:0px; }
+		#notice { background:url('image/notice_back.jpg'); position:absolute; margin:0px; width:990px; height:107px; left:20px; top:80px; }
+		#notice_content { position:absolute; left:20px; top:50px; width:944px; height:31px; font-family:"Malgun Gothic", dotum; font-size:20px; font-weight:bold; text-align:center; }
+		#main { background:url('image/main_back.jpg'); position:absolute; top:202px; left:20px; width:990px; height:552px; }
+		#main_room { position:absolute; left:714px; top:10px; width:250px; height:39px; overflow:hidden; font-family:"Malgun Gothic", dotum; font-weight:bold; font-size:26px; color:#428abc; text-align:right; text-shadow: 1px 1px #707070; }
+		#menu_top { position:absolute; top:10px; left:253px; }
+		#main_title { position:absolute; top:10px; left:20px; width:300px; height:39px; overflow:hidden; font-family:"Malgun Gothic", dotum; font-weight:bold; font-size:26px; color:black; text-align:left; text-shadow: 1px 1px #707070; }
+		#time_table { position:absolute; top:90px; left:20px; }
+		#btn_add { position: absolute; top:451px; left:751px; }
+
+		.inner_box { color:white; padding:10px; font-family:"Malgun gothic", dotum; font-weight:normal; font-size:14px; line-height: 160%; }
+		.rounded_corner { width:214px; position:absolute; -moz-border-radius: 7px; -webkit-border-radius: 7px; -khtml-border-radius: 7px; border-radius: 7px; box-shadow: 4px 4px 4px #888888; margin-bottom:4px; }
+		.box_time { color:yellow; text-shadow: 1px 1px #303030; }
+
+		#write_name { position: absolute; top:75px; left:52px; }
+		#write_phone { position: absolute; top:75px; left:492px; }
+		#write_room { position: absolute; top:172px; left:52px; }
+		#write_date { position: absolute; top:172px; left:492px; }
+		#write_begin { position: absolute; top:269px; left:52px; }
+		#write_end { position: absolute; top:269px; left:492px; }
+
+		#write_repeat { position: absolute; top:366px; left:52px; }
+
+		#write_ok { position: absolute; top:443px; left:483px; width:211px; height:76px; }
+		#write_back { position: absolute; top:443px; left:727px; width:211px; height:76px; }
+
+		.form_back_s { width:278px; height:61px; background:url('image/write_back_s.gif'); }
+		.form_back_l { width:727px; height:61px; background:url('image/write_back_l.gif'); }
+
+		.textbox { height:40px; width:210px; margin-left:30px; border:1px solid #B0B0B0; font-family:"Malgun gothic", dotum; font-size:24px; }
+		.select { height:40px; margin-left:30px; border:1px solid #B0B0B0; font-family:"Malgun gothic", dotum; font-size:24px; }
+
+	</style>
+	<link rel="stylesheet" type="text/css" href="cs-select.css" />
+	<link rel="stylesheet" type="text/css" href="cs-skin-overlay.css" />
+	<link rel="stylesheet" type="text/css" href="DateTimePicker.css" />
+	<script type="text/javascript" src="jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="DateTimePicker.js"></script>
+</head>
+<body>
+	<div id="notice">
+		<div id="notice_content">
+			<marquee width="100%">
+				특별한 알림이 없습니다<br />
+			</marquee>
+		</div>
+	</div>
+	<div id="main">
+		<div id="main_title">회의실 사용 예약하기</div>
+
+		<div id="write_name"><table cellpadding="0" cellspacing="0" border="0" width="431" height="61">
+		<tr>
+			<td background="image/write_name.gif" width="153"></td>
+			<td class="form_back_s">
+				<input type="text" name="rv_name" class="textbox" />
+			</td>
+		</tr>
+		</table></div>
+
+		<div id="write_phone"><table cellpadding="0" cellspacing="0" border="0" width="431" height="61">
+		<tr>
+			<td background="image/write_phone.gif" width="153"></td>
+			<td class="form_back_s">
+				<input type="text" name="rv_name" class="textbox" />
+			</td>
+		</tr>
+		</table></div>
+		
+		<div id="write_room"><table cellpadding="0" cellspacing="0" border="0" width="431" height="61">
+		<tr>
+			<td background="image/write_room.gif" width="153"></td>
+			<td class="form_back_s">
+				<select class="cs-select cs-skin-overlay cs-select-room">
+					<option value="" disabled selected>회의실 선택</option>
+					<optgroup label="1층 회의실">
+						<option value="1층 주회의실 1000호">1층 주회의실 1000호</option>
+						<option value="1층 소회의실 1001호">1층 소회의실 1001호</option>
+						<option value="1층 시청각 회의실 1111호">1층 시청각 회의실 1111호</option>
+						<option value="1층 1112호">1층 1112호</option>
+					</optgroup>
+					<optgroup label="2층 회의실">
+						<option value="2층 주회의실 1000호">2층 주회의실 1000호</option>
+						<option value="2층 소회의실 1001호">2층 소회의실 1001호</option>
+						<option value="2층 시청각 회의실 1111호">2층 시청각 회의실 1111호</option>
+						<option value="2층 1112호">2층 1112호</option>
+					</optgroup>
+					<optgroup label="3층 회의실">
+						<option value="3층 주회의실 1000호">3층 주회의실 1000호</option>
+						<option value="3층 소회의실 1001호">3층 소회의실 1001호</option>
+						<option value="3층 시청각 회의실 1111호">3층 시청각 회의실 1111호</option>
+						<option value="3층 1112호">3층 1112호</option>
+					</optgroup>
+					<optgroup label="4층 회의실">
+						<option value="4층 주회의실 1000호">4층 주회의실 1000호</option>
+						<option value="4층 소회의실 1001호">4층 소회의실 1001호</option>
+						<option value="4층 시청각 회의실 1111호">4층 시청각 회의실 1111호</option>
+						<option value="4층 1112호">4층 1112호</option>
+					</optgroup>
+				</select>
+			</td>
+		</tr>
+		</table></div>
+		
+		<div id="write_date"><table cellpadding="0" cellspacing="0" border="0" width="431" height="61">
+		<tr>
+			<td background="image/write_date.gif" width="153"></td>
+			<td class="form_back_s">
+				<input type="text" name="rv_date" class="textbox" data-field="date" data-format="yyyy-MM-dd" readonly>
+			</td>
+		</tr>
+		</table></div>
+
+		<div id="write_begin"><table cellpadding="0" cellspacing="0" border="0" width="431" height="61">
+		<tr>
+			<td background="image/write_begin.gif" width="153"></td>
+			<td class="form_back_s">
+				<input type="text" id="time_begin" name="rv_time_begin" rem-data-startend="start" rem-data-startendelem="#time_end" class="textbox" data-field="time" data-format="hh:mm AA" readonly />
+			</td>
+		</tr>
+		</table></div>
+
+		<div id="write_end"><table cellpadding="0" cellspacing="0" border="0" width="431" height="61">
+		<tr>
+			<td background="image/write_end.gif" width="153"></td>
+			<td class="form_back_s">
+				<input type="text" id="time_end" name="rv_time_end" rem-data-startend="end" rem-data-startendelem="#time_begin" class="textbox" data-field="time" data-format="hh:mm AA" readonly />
+			</td>
+		</tr>
+		</table></div>
+
+		<div id="write_repeat"><table cellpadding="0" cellspacing="0" border="0" width="880" height="61">
+		<tr>
+			<td background="image/write_repeat.gif" width="153"></td>
+			<td class="form_back_l">
+				<input type="button" value="반복 설정하기" class="textbox" />
+			</td>
+		</tr>
+		</table></div>
+
+		<div id="write_ok"><img src="image/write_btn_ok.gif" border="0" style="cursor:pointer;"></div>
+		<div id="write_back"><img src="image/write_btn_back.gif" border="0" style="cursor:pointer;"></div>
+
+		<div id="dtBox"></div>
+
+		<script src="selector/js/classie.js"></script>
+		<script src="selector/js/selectFx.js"></script>
+		<script>
+			(function() {
+				[].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {	
+					new SelectFx(el, {
+						stickyPlaceholder: false
+					});
+				} );
+			})();
+
+			$(document).ready(function()
+			{
+				$("#dtBox").DateTimePicker({
+					minuteInterval: 30,
+					dateFormat: "yyyy-MM-dd",
+					timeFormat: "hh:mm AA",
+					dateTimeFormat: "yyyy-MM-dd hh:mm:ss AA",
+					shortDayNames: ["일", "월", "화", "수", "목", "금", "토"],
+					fullDayNames: ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"],
+					shortMonthNames: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"],
+					fullMonthNames: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"],
+					//fullMonthNames: ["Januar", "Februar", "M?z", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+		
+					titleContentDate: "날짜 설정",
+					titleContentTime: "시간 설정",
+					titleContentDateTime: "날짜 및 시간 설정",
+				
+					setButtonContent: "설정",
+					clearButtonContent: "지우기",
+				});
+			});
+		</script>
+		
+
+	</div>
+</body>
+</html>
