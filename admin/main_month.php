@@ -39,7 +39,7 @@
 			<input type="button" value="1M▶" style="font-size:12pt;" onclick="location.href='?mode=main&submode=month&month=<?=$next_month?>'" />
 		</div>
 		<div align="left" style="padding:10px;">
-			<li style="font-size:15pt; color:green; font-family:'Malgun gothic', Dotum;">해당 일자에는 모든 회의실의 예약이 보여집니다. 자세한 정보를 보시려면 해당 일자를 클릭해 서화면으로 이동하여 주세요</li>
+			<li style="font-size:15pt; color:green; font-family:'Malgun gothic', Dotum;">해당 일자에는 모든 회의실의 예약이 보여집니다. 자세한 정보를 보시려면 해당 일자를 클릭하여 화면으로 이동하여 주세요</li>
 		</div>
 
 		<?
@@ -74,7 +74,7 @@
 		<? for( $i=1; $i<=$total_week; $i++ ): ?>
 		<tr align="center" valign="top" height="<?=$height_perc?>%">
 			<? for( $j=0; $j<7; $j++ ): ?>
-			<td class="calday" style="cursor:pointer;" onclick="go_day('<?=$cur_year?>-<?=$cur_month?>-<?=$day?>')">
+			<td class="calday" style="cursor:pointer;" onclick="go_day('<?=sprintf( "%04d-%02d-%02d", $cur_year, $cur_month, $day )?>')">
 			<? if ( !( ( $i == 1 && $j < $start_week ) || ( $i == $total_week && $j > $last_week ) ) ): ?>
 			<div class="caldaytext"><?=$day?></div>
 			<?

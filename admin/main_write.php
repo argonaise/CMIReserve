@@ -19,7 +19,8 @@
 		$w = $table->selectfetch( "", "*", "rr_no='".$_GET["rr_no"]."'" );
 	}
 	else {
-		$w["rr_date"] = date( "Y-m-d" );
+		if ( $_GET["date"] == '' ) $w["rr_date"] = date( "Y-m-d" );
+		else $w["rr_date"] = $_GET["date"];
 		$now = time();
 		$now_h = date( "H" );
 		$next_h = date( "H", $now + 3600 );
@@ -36,12 +37,12 @@
 	}
 
 	function fnSuccess() {
-		alert( '등록 성공' );
-		parent.call_write_close();
+		alert( '정보를 저장하였습니다.' );
+		parent.document.location.reload();
 	}
 </SCRIPT>
 
-<div id="prc_frame_div" style="background-color:white; position:absolute; top:0px; left:0px; width:400px; height:60px; display:block;">
+<div id="prc_frame_div" style="background-color:white; position:absolute; top:0px; left:0px; width:500px; height:60px; display:none;">
 <iframe id="prc_iframe" name="prc_iframe" style="width:100%; height:100%"></iframe>
 </div>
 
@@ -71,7 +72,7 @@
 <tr align="center" class="line_toggle_2">
 	<th>회의실</th>
 	<th align="left">
-		<select id="rr_name_select">
+		<select id="rr_name_select" name="rr_room">
 		<? foreach( $confroom as $room ): ?>
 			<option value="<?=$room?>" <? if ( $w["rr_room"] == $room ): ?>selected<? endif ?>><?=$room?></option>
 		<? endforeach ?>

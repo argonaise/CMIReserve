@@ -227,12 +227,14 @@
 
 				// 위에서 수집한 회의 반복 일자에 대해 비어있는지 여부를 검사한다.
 				// 지운 항목과는 시간이 겹쳐도 됨...(2015.10.20)
-				$table->select( "*", "rr_deleted=0 and rr_room='".$_GET["room"]."' and rr_date in (".$dates_to_check_str.")" );
+				// rr_deleted=0 과 rr_deleted='0'은 의미가 많이 틀리다!! 주의할 것.
+				$table->select( "*", "rr_deleted='0' and rr_room='".$_GET["room"]."' and rr_date in (".$dates_to_check_str.")" );
 			}
 			else {
 				// 반복 설정이 되어 있지 않다면, 등록 일자를 기준으로 query한다.
 				// 지운 항목과는 시간이 겹쳐도 됨...(2015.10.20)
-				$table->select( "*", "rr_deleted=0 and rr_room='".$_GET["room"]."' and rr_date='".$_GET["date"]."'" );
+				// rr_deleted=0 과 rr_deleted='0'은 의미가 많이 틀리다!! 주의할 것.
+				$table->select( "*", "rr_deleted='0' and rr_room='".$_GET["room"]."' and rr_date='".$_GET["date"]."'" );
 			}
 
 			$rows = $table->maxrecord();

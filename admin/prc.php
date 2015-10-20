@@ -7,14 +7,13 @@
 		exit;
 	}
 
-	function reserve_duplicate_check( $opt_room, $opt_date, $opt_begin, $opt_end, $opt_repeat_begin, $opt_repeat_end, $opt_repeat_weeks ) {
+	function reserve_duplicate_check( $opt_room, $opt_date, $time_begin, $time_end, $opt_repeat_begin, $opt_repeat_end, $opt_repeat_weeks, $exclude_no = '' ) {
+		global $DB;
+
 		$result = "등록 성공";
 		$message = "";
 
 		$table = $DB->table( "roomreserve" );
-
-		$time_begin = time_format( $opt_begin );
-		$time_end = time_format( $opt_end );
 
 		// 시간 및 날짜 확인
 		if ( $time_begin == $time_end ) {
@@ -46,6 +45,11 @@
 
 		// 먼저 등록하려는 시간대가 비어 있는지 확인한다.
 
+		$update_exclude_sql = '';
+		if ( $exclude_no != '' ) {
+			$update_exclude_sql = " and rr_no != '".$exclude_no."'";
+		}
+
 		// 반복 설정이 되어 있다면, 등록 일자 자체는 무시한다.
 		if (
 			$opt_repeat_week["week_1"] == "true" ||
@@ -76,12 +80,16 @@
 
 			// 위에서 수집한 회의 반복 일자에 대해 비어있는지 여부를 검사한다.
 			// 지운 항목과는 시간이 겹쳐도 됨...(2015.10.20)
-			$table->select( "*", "rr_deleted=0 and rr_room='".$opt_room."' and rr_date in (".$dates_to_check_str.")" );
+			// rr_deleted=0 과 rr_deleted='0'은 의미가 많이 틀리다!! 주의할 것.
+			$table->select( "*", "rr_deleted='0' and rr_room='".$opt_room."' and rr_date in (".$dates_to_check_str.")".$update_exclude_sql );
+			$table->lastsql();
 		}
 		else {
 			// 반복 설정이 되어 있지 않다면, 등록 일자를 기준으로 query한다.
 			// 지운 항목과는 시간이 겹쳐도 됨...(2015.10.20)
-			$table->select( "*", "rr_deleted=0 and rr_room='".$opt_room."' and rr_date='".$opt_date."'" );
+			// rr_deleted=0 과 rr_deleted='0'은 의미가 많이 틀리다!! 주의할 것.
+			$table->select( "*", "rr_deleted='0' and rr_room='".$opt_room."' and rr_date='".$opt_date."'".$update_exclude_sql );
+			$table->lastsql();
 		}
 
 		$rows = $table->maxrecord();
@@ -89,6 +97,7 @@
 		$requested = "신청한 시간(".time_human( $time_begin )."~".time_human( $time_end ).")";
 		while( $data = $table->fetch() ) {
 			$summary = $data["rr_subject"]."(".time_human( $data["rr_time_begin"] )."~".time_human( $data["rr_time_end"] ).")";
+			print "<div>time_begin : ".$data["rr_time_begin"]." == ".$time_begin." / time_end : ".$data["rr_time_end"]."==".$time_end."</div>\n";
 
 			if ( $data["rr_time_begin"] == $time_begin ) {
 				$result = "등록 실패";
@@ -153,14 +162,17 @@
 
 			$result = reserve_duplicate_check(
 				$_POST["rr_room"], $_POST["rr_date"], $_POST["rr_time_begin"], $_POST["rr_time_end"],
-			 	$_POST["rr_time_begin"], $_POST["rr_time_end"], $weeks
+			 	$_POST["rr_time_begin"], $_POST["rr_time_end"], $weeks, $_POST["rr_no"]
 			 );
 
-			if ( $result == "등록 성공" ) {
+			if ( $result["result"] == "등록 성공" ) {
+
+				$table = $DB->table( "roomreserve" );
 
 				// 수정 모드이면 새로 등록하기 전에 전의 것을 안보이게 지움..
 				if ( $_POST["rr_no"] != '' ) {
-					$table->update( "rr_deleted=1", "rr_no='".$_POST["rr_no"]."'" );
+					$table->update( "rr_deleted='1'", "rr_no='".$_POST["rr_no"]."'" );
+					$table->lastsql();
 				}
 
 				$row = new rowedit;
@@ -170,11 +182,10 @@
 				// 겹치는 시간이 없으면 바로 정보 등록!
 				// ----------------------------------------------------------------------------------------------------
 
-				$table = $DB->table( "roomreserve" );
 				$row = new rowedit;
 
-				$time_begin = time_format( $_POST["rr_time_begin"] );
-				$time_end = time_format( $_POST["rr_time_end"] );
+				$time_begin = $_POST["rr_time_begin"];
+				$time_end = $_POST["rr_time_end"];
 
 				if ( sizeof( $_POST["rr_repeat_week"] ) > 0 ) {
 					// 먼저 등록할 일자들을 뽑음..
@@ -275,7 +286,7 @@
 				}
 
 				//print "<xmp>".print_r( $_POST, true )."</xmp>";
-				print "<SCRIPT> parent.go_success(); </SCRIPT>";
+				print "<SCRIPT> parent.fnSuccess(); </SCRIPT>";
 				// ----------------------------------------------------------------------------------------------------
 				// 등록 종료
 				// ----------------------------------------------------------------------------------------------------

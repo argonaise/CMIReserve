@@ -79,8 +79,8 @@
 		}
 	</SCRIPT>
 
-	<div id="autocomplete" style="position:absolute; top:0px; left:0px; width:700px; height:700px; background-color:white; display:none;">
-	<iframe id="autocomplete_iframe" style="width:100%; height:100%"></iframe>
+	<div id="autocomplete" style="position:absolute; top:0px; left:0px; width:750px; height:700px; background-color:white; display:none;">
+	<iframe id="autocomplete_iframe" style="width:100%; height:100%" scrolling="no" style="overflow-y: hidden;"></iframe>
 	</div>
 
 	<div align="center" class="h1">
